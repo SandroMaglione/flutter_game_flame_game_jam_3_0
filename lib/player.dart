@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
@@ -16,7 +17,7 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    sprite = await gameRef.loadSprite('logo.png');
+    sprite = Sprite(game.images.fromCache(Assets.flamePng));
     add(RectangleHitbox());
   }
 
@@ -28,6 +29,19 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
 
   void turn(Direction direction) {
     _direction = (_direction + direction.turn).normalized();
+  }
+
+  void changeStatus() {
+    switch (playerStatus) {
+      case Flame():
+        playerStatus = const Ice();
+        sprite = Sprite(game.images.fromCache(Assets.icePng));
+        break;
+      case Ice():
+        playerStatus = const Flame();
+        sprite = Sprite(game.images.fromCache(Assets.flamePng));
+        break;
+    }
   }
 
   @override

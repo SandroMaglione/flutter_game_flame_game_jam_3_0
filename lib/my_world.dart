@@ -52,9 +52,10 @@ class MyWorld extends World
     final isRight = keysPressed.contains(LogicalKeyboardKey.keyD);
     final isUp = keysPressed.contains(LogicalKeyboardKey.keyW);
     final isDown = keysPressed.contains(LogicalKeyboardKey.keyS);
+    final isSpace = keysPressed.contains(LogicalKeyboardKey.space);
 
     if (isKeyDown) {
-      if (isLeft || isRight || isUp || isDown) {
+      if (isLeft || isRight || isUp || isDown || isSpace) {
         if (isLeft) {
           _player.turn(const Left());
         }
@@ -69,6 +70,10 @@ class MyWorld extends World
 
         if (isDown) {
           _player.turn(const Down());
+        }
+
+        if (isSpace) {
+          _player.changeStatus();
         }
 
         return true;

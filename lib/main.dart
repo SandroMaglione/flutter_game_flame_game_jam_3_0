@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
 import 'package:flutter_game_flame_game_jam_3_0/my_world.dart';
 
 void main() {
@@ -20,7 +21,8 @@ class MyGame extends FlameGame
   final MyWorld myWorld;
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
+    await images.loadAll([Assets.flamePng, Assets.icePng]);
     addAll([cameraComponent, myWorld]);
     debugMode = true;
   }
