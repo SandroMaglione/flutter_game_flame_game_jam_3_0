@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
@@ -41,31 +40,6 @@ class MyGame extends FlameGame
 
     addAll(gridCells);
     add(_player);
-
-    const direction = Up();
-
-    _worldGrid.startMove();
-    gridCells.forEach((cell) {
-      cell.add(
-        MoveEffect.by(
-          Vector2(0, _worldGrid.cellSize),
-          EffectController(
-            duration: 2,
-            onMax: () {
-              print("Done $cell");
-            },
-          ),
-        ),
-      );
-    });
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (!_worldGrid.isMoving) {
-      // Trigger next movement
-    }
   }
 
   @override
@@ -74,11 +48,32 @@ class MyGame extends FlameGame
     Set<LogicalKeyboardKey> keysPressed,
   ) {
     final isKeyDown = event is RawKeyDownEvent;
-    final isSpace = keysPressed.contains(LogicalKeyboardKey.space);
+    final isLeft = keysPressed.contains(LogicalKeyboardKey.keyA);
+    final isRight = keysPressed.contains(LogicalKeyboardKey.keyD);
+    final isUp = keysPressed.contains(LogicalKeyboardKey.keyW);
+    final isDown = keysPressed.contains(LogicalKeyboardKey.keyS);
 
-    if (isKeyDown && isSpace) {
-      // Activate current cell
-      print(_worldGrid.current);
+    if (isKeyDown) {
+      if (isLeft) {
+        print("Left");
+        _player.turn(const Left());
+      }
+
+      if (isRight) {
+        print("Right");
+        _player.turn(const Right());
+      }
+
+      if (isUp) {
+        print("Up");
+        _player.turn(const Up());
+      }
+
+      if (isDown) {
+        print("Down");
+        _player.turn(const Down());
+      }
+
       return KeyEventResult.handled;
     }
 
