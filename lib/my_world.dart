@@ -21,17 +21,16 @@ class MyWorld extends World
 
   @override
   FutureOr<void> onLoad() {
-    addAll(
-      List.generate(
-        10,
-        (i) => Npc(
-          (Vector2.random().normalized() * (Random().nextBool() ? 1 : -1)),
-        ),
-      ),
-    );
+    // add(Ground());
 
-    add(Wall(position: wallOrigin, size: Vector2(wallLength, wallSize)));
-    add(Wall(position: wallOrigin, size: Vector2(wallSize, wallLength)));
+    add(Wall(
+      position: wallOrigin,
+      size: Vector2(wallLength, wallSize),
+    ));
+    add(Wall(
+      position: wallOrigin,
+      size: Vector2(wallSize, wallLength),
+    ));
     add(Wall(
       position: Vector2(wallOrigin.x, wallOrigin.y + wallLength),
       size: Vector2(wallLength, wallSize),
@@ -40,6 +39,15 @@ class MyWorld extends World
       position: Vector2(wallOrigin.x + wallLength, wallOrigin.y),
       size: Vector2(wallSize, wallLength + wallSize),
     ));
+
+    addAll(
+      List.generate(
+        10,
+        (i) => Npc(
+          (Vector2.random().normalized() * (Random().nextBool() ? 1 : -1)),
+        ),
+      ),
+    );
 
     add(_player);
     gameRef.cameraComponent.follow(_player);

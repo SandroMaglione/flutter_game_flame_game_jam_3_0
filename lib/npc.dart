@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
+import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
@@ -27,13 +28,18 @@ class Npc extends SpriteComponent with HasGameRef, CollisionCallbacks {
     position.add(_direction * speed * dt);
   }
 
+  void changeStatus(PlayerStatus to) {
+    playerStatus = to;
+    sprite = Sprite(game.images.fromCache(to.asset));
+  }
+
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
 
-    if (other is Wall) {
+    if (other is Wall || other is Npc || other is Player) {
       _direction.invert();
     }
   }

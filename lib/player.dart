@@ -2,6 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
+import 'package:flutter_game_flame_game_jam_3_0/npc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
@@ -32,16 +33,12 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
   }
 
   void changeStatus() {
-    switch (playerStatus) {
-      case Flame():
-        playerStatus = const Ice();
-        sprite = Sprite(game.images.fromCache(Assets.icePng));
-        break;
-      case Ice():
-        playerStatus = const Flame();
-        sprite = Sprite(game.images.fromCache(Assets.flamePng));
-        break;
-    }
+    playerStatus = switch (playerStatus) {
+      Flame() => const Ice(),
+      Ice() => const Flame(),
+    };
+
+    sprite = Sprite(game.images.fromCache(playerStatus.asset));
   }
 
   @override
@@ -52,6 +49,9 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
 
     if (other is Wall) {
       _direction.invert();
+    } else if (other is Npc) {
+      _direction.invert();
+      other.changeStatus(playerStatus);
     }
   }
 }
