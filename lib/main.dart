@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/world_grid.dart';
 
@@ -19,11 +21,13 @@ void main() {
 
 class MyGame extends FlameGame
     with SingleGameInstance, KeyboardEvents, HasGameRef {
+  List<RectangleComponent> gridCells = List.empty(growable: true);
+
   @override
   FutureOr<void> onLoad() {
     _worldGrid.forEach(
       (position, cell) => {
-        add(
+        gridCells.add(
           RectangleComponent.square(
             size: _worldGrid.cellSize,
             position: position +
@@ -35,13 +39,33 @@ class MyGame extends FlameGame
       },
     );
 
+    addAll(gridCells);
     add(_player);
+
+    const direction = Up();
+
+    _worldGrid.startMove();
+    gridCells.forEach((cell) {
+      cell.add(
+        MoveEffect.by(
+          Vector2(0, _worldGrid.cellSize),
+          EffectController(
+            duration: 2,
+            onMax: () {
+              print("Done $cell");
+            },
+          ),
+        ),
+      );
+    });
   }
 
   @override
   void update(double dt) {
-    // TODO: implement update
     super.update(dt);
+    if (!_worldGrid.isMoving) {
+      // Trigger next movement
+    }
   }
 
   @override

@@ -18,10 +18,16 @@ abstract interface class WorldGrid {
 
   /// Cell position of the player (center)
   WorldCell get current;
+
+  bool get isMoving;
+
+  void startMove();
 }
 
 class WorldGridImpl extends WorldGrid {
   late List<List<WorldCell>> grid;
+
+  bool _isMoving = false;
 
   WorldGridImpl(this.cellSize) {
     grid = List.generate(
@@ -34,6 +40,9 @@ class WorldGridImpl extends WorldGrid {
   }
 
   @override
+  bool get isMoving => _isMoving;
+
+  @override
   double cellSize;
 
   @override
@@ -41,6 +50,8 @@ class WorldGridImpl extends WorldGrid {
 
   @override
   void move(Direction direction) {
+    _isMoving = true;
+
     List<WorldCell> newCells = List.generate(
       size,
       (_) => WorldCell.random,
@@ -68,5 +79,10 @@ class WorldGridImpl extends WorldGrid {
         );
       }
     }
+  }
+
+  @override
+  void startMove() {
+    _isMoving = true;
   }
 }
