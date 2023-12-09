@@ -4,7 +4,7 @@ import 'package:flutter_game_flame_game_jam_3_0/world_cell.dart';
 
 abstract interface class WorldGrid {
   /// Size of the grid (square)
-  int get size => 10;
+  int get size => 11;
 
   set cellSize(double size);
   double get cellSize;

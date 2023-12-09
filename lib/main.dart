@@ -8,16 +8,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/world_grid.dart';
 
-const cellSize = 50.0;
+const _cellSize = 50.0;
 
-final Player _player = Player(cellSize);
-final WorldGrid _worldGrid = WorldGridImpl(cellSize);
+final Player _player = Player(_cellSize);
+final WorldGrid _worldGrid = WorldGridImpl(_cellSize);
 
 void main() {
   runApp(GameWidget(game: MyGame()));
 }
 
-class MyGame extends FlameGame with SingleGameInstance, KeyboardEvents {
+class MyGame extends FlameGame
+    with SingleGameInstance, KeyboardEvents, HasGameRef {
   @override
   FutureOr<void> onLoad() {
     _worldGrid.forEach(
@@ -25,7 +26,9 @@ class MyGame extends FlameGame with SingleGameInstance, KeyboardEvents {
         add(
           RectangleComponent.square(
             size: _worldGrid.cellSize,
-            position: position,
+            position: position +
+                (gameRef.size / 2) -
+                Vector2.all(_worldGrid.size * _worldGrid.cellSize / 2),
             paint: Paint()..color = cell.color,
           ),
         )
