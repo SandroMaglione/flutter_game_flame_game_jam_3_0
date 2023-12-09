@@ -2,6 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
+import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
 class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
   PlayerStatus playerStatus = const Flame();
@@ -34,5 +35,9 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
       Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
+
+    if (other is Wall) {
+      _direction.invert();
+    }
   }
 }
