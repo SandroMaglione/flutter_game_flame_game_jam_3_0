@@ -17,8 +17,6 @@ class Npc extends SpriteComponent with HasGameRef, CollisionCallbacks {
     super.onLoad();
     sprite = await gameRef.loadSprite('logo.png');
     size = Vector2.all(30);
-    position = (gameRef.size / 2) - Vector2.all(size.x / 2);
-
     add(RectangleHitbox());
   }
 

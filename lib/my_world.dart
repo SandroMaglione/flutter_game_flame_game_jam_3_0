@@ -10,8 +10,13 @@ import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
 final Player _player = Player(50.0);
+const double wallSize = 30;
+const double origin = 500;
+final Vector2 wallOrigin = Vector2(-origin, -origin);
+const double wallLength = origin * 2;
 
-class MyWorld extends World with HasGameRef<MyGame>, KeyboardHandler {
+class MyWorld extends World
+    with HasGameRef<MyGame>, KeyboardHandler, HasCollisionDetection {
   MyWorld({super.children});
 
   @override
@@ -25,30 +30,16 @@ class MyWorld extends World with HasGameRef<MyGame>, KeyboardHandler {
       ),
     );
 
-    add(
-      Wall(
-        position: Vector2(-100.0, 100.0),
-        size: Vector2(1800, 30),
-      ),
-    );
-    add(
-      Wall(
-        position: Vector2(-100.0, 100.0),
-        size: Vector2(30, 1800),
-      ),
-    );
-    add(
-      Wall(
-        position: Vector2(100.0, 100.0),
-        size: Vector2(1800, 30),
-      ),
-    );
-    add(
-      Wall(
-        position: Vector2(-100.0, -100.0),
-        size: Vector2(1800, 30),
-      ),
-    );
+    add(Wall(position: wallOrigin, size: Vector2(wallLength, wallSize)));
+    add(Wall(position: wallOrigin, size: Vector2(wallSize, wallLength)));
+    add(Wall(
+      position: Vector2(wallOrigin.x, wallOrigin.y + wallLength),
+      size: Vector2(wallLength, wallSize),
+    ));
+    add(Wall(
+      position: Vector2(wallOrigin.x + wallLength, wallOrigin.y),
+      size: Vector2(wallSize, wallLength + wallSize),
+    ));
 
     add(_player);
     gameRef.cameraComponent.follow(_player);

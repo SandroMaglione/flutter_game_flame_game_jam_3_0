@@ -16,8 +16,6 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
   Future<void> onLoad() async {
     super.onLoad();
     sprite = await gameRef.loadSprite('logo.png');
-    position = (gameRef.size / 2) - Vector2.all(size.x / 2);
-
     add(RectangleHitbox());
   }
 
