@@ -15,6 +15,9 @@ abstract interface class WorldGrid {
 
   /// Render for each [WorldCell]
   void forEach(Function(Vector2 position, WorldCell cell) render);
+
+  /// Cell position of the player (center)
+  WorldCell get current;
 }
 
 class WorldGridImpl extends WorldGrid {
@@ -32,6 +35,9 @@ class WorldGridImpl extends WorldGrid {
 
   @override
   double cellSize;
+
+  @override
+  WorldCell get current => grid[size ~/ 2][size ~/ 2];
 
   @override
   void move(Direction direction) {

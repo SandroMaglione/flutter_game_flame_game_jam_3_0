@@ -39,6 +39,12 @@ class MyGame extends FlameGame
   }
 
   @override
+  void update(double dt) {
+    // TODO: implement update
+    super.update(dt);
+  }
+
+  @override
   KeyEventResult onKeyEvent(
     RawKeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
@@ -48,6 +54,7 @@ class MyGame extends FlameGame
 
     if (isKeyDown && isSpace) {
       // Activate current cell
+      print(_worldGrid.current);
       return KeyEventResult.handled;
     }
 

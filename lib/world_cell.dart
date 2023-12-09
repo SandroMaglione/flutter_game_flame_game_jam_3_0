@@ -24,6 +24,9 @@ class EmptyCell extends WorldCell {
 
   @override
   Color get color => Colors.black38;
+
+  @override
+  String toString() => "Empty";
 }
 
 class ChangeDirectionCell extends WorldCell {
@@ -31,6 +34,9 @@ class ChangeDirectionCell extends WorldCell {
 
   @override
   Color get color => Colors.pink;
+
+  @override
+  String toString() => "ChangeDirection";
 }
 
 class SwitchStatusCell extends WorldCell {
@@ -38,6 +44,9 @@ class SwitchStatusCell extends WorldCell {
 
   @override
   Color get color => Colors.grey;
+
+  @override
+  String toString() => "SwitchStatus";
 }
 
 class FlameCell extends WorldCell {
@@ -45,6 +54,9 @@ class FlameCell extends WorldCell {
 
   @override
   Color get color => Colors.orange;
+
+  @override
+  String toString() => "Flame";
 }
 
 class IceCell extends WorldCell {
@@ -52,4 +64,7 @@ class IceCell extends WorldCell {
 
   @override
   Color get color => Colors.blue;
+
+  @override
+  String toString() => "Ice";
 }
