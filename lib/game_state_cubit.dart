@@ -1,15 +1,14 @@
 import 'package:flame/components.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
 import 'package:flutter_game_flame_game_jam_3_0/npc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 
-typedef GameState = Map<int, PlayerStatus>;
-
 class GameStateCubit extends Cubit<GameState> {
-  GameStateCubit() : super(<int, PlayerStatus>{});
+  GameStateCubit() : super(GameState.init());
 
   List<Npc> init(int n) {
-    GameState gameState = {};
+    Map<int, PlayerStatus> gameState = {};
     List<Npc> npcs = [];
     for (var i = 0; i < n; i++) {
       final playerStatus = i % 2 == 0 ? const Flame() : const Ice();
@@ -23,18 +22,13 @@ class GameStateCubit extends Cubit<GameState> {
       gameState.putIfAbsent(i, () => playerStatus);
     }
 
-    emit(gameState);
+    emit(GameState(gameState));
     return npcs;
   }
 
   void changeStatus(Npc npc) {
-    final newState = <int, PlayerStatus>{...state};
+    final newState = <int, PlayerStatus>{...state.npcMap};
     newState.update(npc.id, (value) => npc.playerStatus);
-    emit(newState);
+    emit(GameState(newState));
   }
-
-  int get flames => state.values.whereType<Flame>().length;
-  int get ices => state.values.whereType<Ice>().length;
-
-  int get totalNpc => state.length;
 }

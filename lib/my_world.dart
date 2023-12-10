@@ -1,7 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_game_flame_game_jam_3_0/background.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/main.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player.dart';
@@ -24,6 +26,8 @@ class MyWorld extends World
   @override
   Future<void> onLoad() async {
     super.onLoad();
+
+    add(Background());
 
     add(Wall(
       position: wallOrigin,

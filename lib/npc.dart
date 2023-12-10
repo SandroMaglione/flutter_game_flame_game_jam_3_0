@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';

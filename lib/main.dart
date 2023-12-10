@@ -7,6 +7,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/my_world.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -51,23 +52,21 @@ class GameView extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 30,
+          bottom: 60,
           left: 150,
           right: 150,
           child: Center(
-            child: Builder(builder: (context) {
-              final gameStateCubit = context.watch<GameStateCubit>();
-              return StepProgressIndicator(
-                totalSteps:
-                    gameStateCubit.totalNpc > 0 ? gameStateCubit.totalNpc : 1,
+            child: BlocBuilder<GameStateCubit, GameState>(
+              builder: (context, state) => StepProgressIndicator(
+                totalSteps: state.totalNpc > 0 ? state.totalNpc : 1,
                 padding: 0,
-                currentStep: gameStateCubit.flames,
+                currentStep: state.flames,
                 selectedColor: Colors.orangeAccent,
                 unselectedColor: Colors.blueAccent,
-                size: 20,
+                size: 30,
                 roundedEdges: const Radius.circular(20),
-              );
-            }),
+              ),
+            ),
           ),
         ),
       ],
