@@ -62,7 +62,7 @@ class MyWorld extends World
     final isDown = keysPressed.contains(LogicalKeyboardKey.keyS);
     final isSpace = keysPressed.contains(LogicalKeyboardKey.space);
 
-    if (isKeyDown && !bloc.state.isEnded) {
+    if (isKeyDown && bloc.state.isEnded == null) {
       if (isLeft || isRight || isUp || isDown || isSpace) {
         List<Direction> turning = [];
         if (isLeft) {

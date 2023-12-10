@@ -57,60 +57,63 @@ class GameView extends StatelessWidget {
           right: 150,
           child: Center(
             child: BlocBuilder<GameStateCubit, GameState>(
-              builder: (context, state) => state.isEnded
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Transform.scale(
-                          scale: 1.5,
-                          child: Image.asset(
-                            "images/${Assets.flamePng}",
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        const SizedBox(width: 30),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.read<GameStateCubit>().restart();
-                          },
-                          style: const ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.black),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 10,
+              builder: (context, state) {
+                final ended = state.isEnded;
+                return ended != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Image.asset(
+                              "images/${ended.asset}",
+                              fit: BoxFit.fill,
                             ),
-                            child: Text(
-                              "Click to restart",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 36,
-                                color: Colors.white,
+                          ),
+                          const SizedBox(width: 30),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<GameStateCubit>().restart();
+                            },
+                            style: const ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(Colors.black),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 10,
+                              ),
+                              child: Text(
+                                "Click to restart",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 36,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 30),
-                        Transform.scale(
-                          scale: 1.5,
-                          child: Image.asset(
-                            "images/${Assets.icePng}",
-                            fit: BoxFit.fill,
+                          const SizedBox(width: 30),
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Image.asset(
+                              "images/${ended.asset}",
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  : StepProgressIndicator(
-                      totalSteps: state.totalNpc > 0 ? state.totalNpc : 1,
-                      padding: 0,
-                      currentStep: state.flames,
-                      selectedColor: Colors.orangeAccent,
-                      unselectedColor: Colors.blueAccent,
-                      size: 30,
-                      roundedEdges: const Radius.circular(20),
-                    ),
+                        ],
+                      )
+                    : StepProgressIndicator(
+                        totalSteps: state.totalNpc > 0 ? state.totalNpc : 1,
+                        padding: 0,
+                        currentStep: state.flames,
+                        selectedColor: Colors.orangeAccent,
+                        unselectedColor: Colors.blueAccent,
+                        size: 30,
+                        roundedEdges: const Radius.circular(20),
+                      );
+              },
             ),
           ),
         ),

@@ -94,7 +94,7 @@ class Npc extends SpriteComponent
     // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
 
-    if (!bloc.state.isEnded) {
+    if (bloc.state.isEnded == null) {
       if (other is Wall) {
         _direction.invert();
       } else if (other is Npc &&

@@ -30,7 +30,7 @@ class GameStateCubit extends Cubit<GameState> {
   }
 
   void changeStatus(Npc npc) {
-    if (!state.isEnded) {
+    if (state.isEnded == null) {
       final newState = <int, PlayerStatus>{...state.npcMap};
       newState.update(npc.id, (value) => npc.playerStatus);
       emit(GameState(newState));
