@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
@@ -19,6 +20,7 @@ class Player extends SpriteComponent
   Vector2 _direction = Vector2.zero();
   double speed = 400.0;
   DateTime lastChange = DateTime.now();
+  bool isChanging = false;
 
   Player(double size)
       : playerStatus = Random().nextBool() ? const Flame() : const Ice() {
@@ -28,6 +30,7 @@ class Player extends SpriteComponent
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    anchor = Anchor.center;
     sprite = Sprite(game.images.fromCache(playerStatus.asset));
     add(RectangleHitbox());
   }
@@ -47,23 +50,63 @@ class Player extends SpriteComponent
   }
 
   void turn(List<Direction> direction) {
-    _direction = (_direction +
-            direction.fold(
-              Vector2.zero(),
-              (value, dir) => value + dir.turn,
-            ))
-        .normalized();
+    if (!isChanging) {
+      _direction = (_direction +
+              direction.fold(
+                Vector2.zero(),
+                (value, dir) => value + dir.turn,
+              ))
+          .normalized();
+    }
   }
 
   void changeStatus() {
-    playerStatus = switch (playerStatus) {
-      Flame() => const Ice(),
-      Ice() => const Flame(),
-    };
+    if (!isChanging) {
+      isChanging = true;
+      _direction = Vector2.zero();
 
-    sprite = Sprite(game.images.fromCache(playerStatus.asset));
-    lastChange = DateTime.now();
-    bloc.changeStatusPlayer();
+      final effect = SequenceEffect([
+        ScaleEffect.to(
+          Vector2.all(0.3),
+          EffectController(
+            duration: 0.2,
+          ),
+        ),
+        OpacityEffect.to(
+          0,
+          EffectController(
+            duration: 0.1,
+            onMax: () {
+              playerStatus = switch (playerStatus) {
+                Flame() => const Ice(),
+                Ice() => const Flame(),
+              };
+
+              sprite = Sprite(game.images.fromCache(playerStatus.asset));
+            },
+          ),
+        ),
+        ScaleEffect.to(
+          Vector2.all(1),
+          EffectController(
+            duration: 0.1,
+            startDelay: 0.2,
+          ),
+        ),
+        OpacityEffect.to(
+          1,
+          EffectController(
+            duration: 0.1,
+            startDelay: 0.2,
+          ),
+        ),
+      ], onComplete: () {
+        isChanging = false;
+        bloc.changeStatusPlayer();
+      });
+
+      add(effect);
+    }
   }
 
   @override
@@ -73,7 +116,8 @@ class Player extends SpriteComponent
 
     if (other is Wall) {
       _direction.invert();
-    } else if (other is Npc) {
+    } else if (other is Npc && !isChanging) {
+      lastChange = DateTime.now();
       other.changeStatus(playerStatus, true);
     }
   }

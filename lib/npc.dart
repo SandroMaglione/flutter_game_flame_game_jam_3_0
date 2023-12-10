@@ -31,6 +31,7 @@ class Npc extends SpriteComponent
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    anchor = Anchor.center;
     sprite = Sprite(game.images.fromCache(playerStatus.asset));
     size = Vector2.all(30);
     add(RectangleHitbox());
