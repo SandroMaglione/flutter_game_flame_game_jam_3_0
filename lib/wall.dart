@@ -14,7 +14,7 @@ class Wall extends RectangleComponent with CollisionCallbacks {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    paint.color = Colors.amber;
+    paint.color = Colors.white;
     add(RectangleHitbox());
   }
 

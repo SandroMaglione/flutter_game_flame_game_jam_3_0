@@ -52,7 +52,7 @@ class GameView extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 60,
+          bottom: 50,
           left: 150,
           right: 150,
           child: Center(

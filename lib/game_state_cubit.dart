@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
@@ -13,7 +15,8 @@ class GameStateCubit extends Cubit<GameState> {
     for (var i = 0; i < n; i++) {
       final playerStatus = i % 2 == 0 ? const Flame() : const Ice();
       final npc = Npc(
-        Vector2.random(),
+        Vector2(Random().nextDouble() * (1000 * 0.8) - (500 * 0.8),
+            Random().nextDouble() * (1000 * 0.8) - (500 * 0.8)),
         id: i,
         playerStatus: playerStatus,
       );

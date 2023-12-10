@@ -4,7 +4,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
@@ -23,15 +22,16 @@ class Npc extends SpriteComponent
   PlayerStatus playerStatus;
   final int id;
 
-  Npc(Vector2 direction, {required this.id, required this.playerStatus})
+  Npc(Vector2 position, {required this.id, required this.playerStatus})
       : stength = Random().nextDouble() {
-    _direction = direction;
+    this.position = position;
+    _direction = Vector2.random() * (Random().nextBool() ? 1 : -1);
   }
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    sprite = Sprite(game.images.fromCache(Assets.flamePng));
+    sprite = Sprite(game.images.fromCache(playerStatus.asset));
     size = Vector2.all(30);
     add(RectangleHitbox());
   }
