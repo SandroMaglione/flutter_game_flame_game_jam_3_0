@@ -25,6 +25,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Font
+      fonts:
+        - asset: assets/fonts/font.ttf
   assets:
     - assets/images/flame.png
     - assets/images/ice.png

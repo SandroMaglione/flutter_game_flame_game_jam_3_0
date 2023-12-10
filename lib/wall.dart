@@ -17,11 +17,4 @@ class Wall extends RectangleComponent with CollisionCallbacks {
     paint.color = Colors.white;
     add(RectangleHitbox());
   }
-
-  @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollisionStart
-    super.onCollisionStart(intersectionPoints, other);
-  }
 }

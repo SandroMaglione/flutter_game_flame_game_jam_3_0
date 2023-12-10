@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flame Game Jam 3.0',
+      theme: ThemeData(fontFamily: 'Font'),
       home: Scaffold(
         body: MultiBlocProvider(
           providers: [
