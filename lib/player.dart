@@ -18,6 +18,7 @@ class Player extends SpriteComponent
   PlayerStatus playerStatus = const Flame();
   Vector2 _direction = Vector2.zero();
   double speed = 400.0;
+  DateTime lastChange = DateTime.now();
 
   Player(double size)
       : playerStatus = Random().nextBool() ? const Flame() : const Ice() {
@@ -35,8 +36,14 @@ class Player extends SpriteComponent
   void update(double dt) {
     super.update(dt);
 
-    _direction *= 0.98;
-    position.add(_direction * speed * dt);
+    if (bloc.state.isEnded == null) {
+      if (DateTime.now().difference(lastChange).inSeconds > 10) {
+        bloc.endGame(this);
+      } else {
+        _direction *= 0.98;
+        position.add(_direction * speed * dt);
+      }
+    }
   }
 
   void turn(List<Direction> direction) {
@@ -55,6 +62,7 @@ class Player extends SpriteComponent
     };
 
     sprite = Sprite(game.images.fromCache(playerStatus.asset));
+    lastChange = DateTime.now();
     bloc.changeStatusPlayer();
   }
 

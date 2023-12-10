@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_game_flame_game_jam_3_0/npc.dart';
+import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 
 class GameState extends Equatable {
@@ -33,6 +34,12 @@ class GameState extends Equatable {
         npcMap,
         max(0, points - 20),
       );
+
+  GameState end(Player player) {
+    final newState = <int, PlayerStatus>{...npcMap};
+    newState.updateAll((_, __) => player.playerStatus);
+    return GameState(newState, points - 100);
+  }
 
   GameState updateNpc(Npc npc, bool fromPlayer) {
     final newState = <int, PlayerStatus>{...npcMap};

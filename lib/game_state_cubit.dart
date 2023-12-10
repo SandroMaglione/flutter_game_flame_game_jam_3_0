@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
 import 'package:flutter_game_flame_game_jam_3_0/npc.dart';
+import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 
 class GameStateCubit extends Cubit<GameState> {
@@ -40,4 +41,6 @@ class GameStateCubit extends Cubit<GameState> {
       emit(state.losePoints());
     }
   }
+
+  void endGame(Player player) => emit(state.end(player));
 }
