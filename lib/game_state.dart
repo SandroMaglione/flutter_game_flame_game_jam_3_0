@@ -12,6 +12,8 @@ class GameState extends Equatable {
 
   int get totalNpc => npcMap.length;
 
+  bool get isEnded => totalNpc > 0 && (flames == totalNpc || ices == totalNpc);
+
   @override
   List<Object?> get props => [npcMap];
 }

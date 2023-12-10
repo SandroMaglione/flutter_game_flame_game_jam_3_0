@@ -94,15 +94,17 @@ class Npc extends SpriteComponent
     // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
 
-    if (other is Wall) {
-      _direction.invert();
-    } else if (other is Npc &&
-        !other.isChanging &&
-        other.playerStatus != playerStatus) {
-      if (stength > other.stength) {
-        other.changeStatus(playerStatus);
-      } else {
-        changeStatus(other.playerStatus);
+    if (!bloc.state.isEnded) {
+      if (other is Wall) {
+        _direction.invert();
+      } else if (other is Npc &&
+          !other.isChanging &&
+          other.playerStatus != playerStatus) {
+        if (stength > other.stength) {
+          other.changeStatus(playerStatus);
+        } else {
+          changeStatus(other.playerStatus);
+        }
       }
     }
   }
