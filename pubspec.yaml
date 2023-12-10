@@ -13,6 +13,8 @@ dependencies:
 
   flame: ^1.11.0
   equatable: ^2.0.5
+  flame_riverpod: ^5.1.0
+  flutter_riverpod: ^2.4.9
 
 dev_dependencies:
   flutter_test:
