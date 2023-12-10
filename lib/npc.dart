@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
-import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
@@ -9,8 +11,11 @@ class Npc extends SpriteComponent with HasGameRef, CollisionCallbacks {
   PlayerStatus playerStatus = const Flame();
   Vector2 _direction = Vector2(0, 1);
   double speed = 200.0;
+  double stength;
 
-  Npc(Vector2 direction) {
+  bool isChanging = false;
+
+  Npc(Vector2 direction) : stength = Random().nextDouble() {
     _direction = direction;
   }
 
@@ -25,12 +30,52 @@ class Npc extends SpriteComponent with HasGameRef, CollisionCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
-    position.add(_direction * speed * dt);
+    if (!isChanging) {
+      position.add(_direction * speed * dt);
+    }
   }
 
   void changeStatus(PlayerStatus to) {
-    playerStatus = to;
-    sprite = Sprite(game.images.fromCache(to.asset));
+    if (!isChanging && playerStatus != to) {
+      isChanging = true;
+
+      final effect = SequenceEffect([
+        ScaleEffect.to(
+          Vector2.all(0.3),
+          EffectController(
+            duration: 0.2,
+          ),
+        ),
+        OpacityEffect.to(
+          0,
+          EffectController(
+            duration: 0.4,
+            onMax: () {
+              playerStatus = to;
+              sprite = Sprite(game.images.fromCache(to.asset));
+            },
+          ),
+        ),
+        ScaleEffect.to(
+          Vector2.all(1),
+          EffectController(
+            duration: 0.2,
+            startDelay: 0.4,
+          ),
+        ),
+        OpacityEffect.to(
+          1,
+          EffectController(
+            duration: 0.1,
+            startDelay: 0.45,
+          ),
+        ),
+      ], onComplete: () {
+        isChanging = false;
+      });
+
+      add(effect);
+    }
   }
 
   @override
@@ -39,8 +84,16 @@ class Npc extends SpriteComponent with HasGameRef, CollisionCallbacks {
     // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
 
-    if (other is Wall || other is Npc || other is Player) {
+    if (other is Wall) {
       _direction.invert();
+    } else if (other is Npc &&
+        !other.isChanging &&
+        other.playerStatus != playerStatus) {
+      if (stength > other.stength) {
+        other.changeStatus(playerStatus);
+      } else {
+        changeStatus(other.playerStatus);
+      }
     }
   }
 }

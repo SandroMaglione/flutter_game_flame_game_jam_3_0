@@ -1,9 +1,13 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
 
-sealed class PlayerStatus {
+sealed class PlayerStatus extends Equatable {
   const PlayerStatus();
 
   String get asset;
+
+  @override
+  List<Object?> get props => [asset];
 }
 
 final class Flame extends PlayerStatus {
