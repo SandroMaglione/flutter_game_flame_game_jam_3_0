@@ -80,6 +80,7 @@ class Npc extends SpriteComponent
         ),
       ], onComplete: () {
         isChanging = false;
+        bloc.changeStatus(this);
       });
 
       add(effect);

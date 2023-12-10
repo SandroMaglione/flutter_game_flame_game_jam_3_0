@@ -54,16 +54,17 @@ class GameView extends StatelessWidget {
           left: 0,
           right: 0,
           child: Center(
-            child: BlocBuilder<GameStateCubit, GameState>(
-              builder: (context, gameState) => Text(
-                "Here: ${gameState.length}",
+            child: Builder(builder: (context) {
+              final gameStateCubit = context.watch<GameStateCubit>();
+              return Text(
+                "${gameStateCubit.flames}",
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 36,
                 ),
-              ),
-            ),
+              );
+            }),
           ),
         ),
       ],
