@@ -35,4 +35,6 @@ class GameStateCubit extends Cubit<GameState> {
 
   int get flames => state.values.whereType<Flame>().length;
   int get ices => state.values.whereType<Ice>().length;
+
+  int get totalNpc => state.length;
 }
