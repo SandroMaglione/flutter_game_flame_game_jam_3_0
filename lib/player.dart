@@ -25,11 +25,18 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
+
+    _direction *= 0.98;
     position.add(_direction * speed * dt);
   }
 
-  void turn(Direction direction) {
-    _direction = (_direction + direction.turn).normalized();
+  void turn(List<Direction> direction) {
+    _direction = (_direction +
+            direction.fold(
+              Vector2.zero(),
+              (value, dir) => value + dir.turn,
+            ))
+        .normalized();
   }
 
   void changeStatus() {
@@ -50,7 +57,7 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
     if (other is Wall) {
       _direction.invert();
     } else if (other is Npc) {
-      _direction.invert();
+      // _direction.invert();
       other.changeStatus(playerStatus);
     }
   }

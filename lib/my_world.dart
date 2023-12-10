@@ -64,21 +64,24 @@ class MyWorld extends World
 
     if (isKeyDown) {
       if (isLeft || isRight || isUp || isDown || isSpace) {
+        List<Direction> turning = [];
         if (isLeft) {
-          _player.turn(const Left());
+          turning.add(const Left());
         }
 
         if (isRight) {
-          _player.turn(const Right());
+          turning.add(const Right());
         }
 
         if (isUp) {
-          _player.turn(const Up());
+          turning.add(const Up());
         }
 
         if (isDown) {
-          _player.turn(const Down());
+          turning.add(const Down());
         }
+
+        _player.turn(turning);
 
         if (isSpace) {
           _player.changeStatus();

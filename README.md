@@ -39,3 +39,14 @@ As you progress the movement gets faster. Resist as much as you can.
 ### Attention
 - Allow player to see enough cells to form a strategy to progress
 - Keep right balance in cells (especially switch between flame/ice)
+
+
+## New notes
+- Flame / Ice forms have different controls
+- Each status has a limit (has you change NPCs this limit reduces, you are auto switched at a certain point)
+- Player goes through NPCs, but it takes a certain time for them to change
+- It takes a certain time also for the Player to change status
+- Show ASDW command and Space to change form on the ground when the game starts
+- NPCs collision causes one of them to change, which one is pseudo-random
+- Keep track of current status of all NPCs, you must keep a balance between hot & cold
+- Free controls for the Player (not always moving), using forces ([`flame_forge2d`](https://pub.dev/documentation/flame_forge2d/latest/flame_forge2d/Body/applyForce.html))
