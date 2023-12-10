@@ -33,7 +33,7 @@ class Npc extends SpriteComponent
     super.onLoad();
     anchor = Anchor.center;
     sprite = Sprite(game.images.fromCache(playerStatus.asset));
-    size = Vector2.all(30);
+    size = Vector2.all(35);
     add(RectangleHitbox());
   }
 
@@ -51,13 +51,13 @@ class Npc extends SpriteComponent
 
       final effect = SequenceEffect([
         ScaleEffect.to(
-          Vector2.all(0.3),
+          Vector2.all(0.4),
           EffectController(
             duration: 0.2,
           ),
         ),
         OpacityEffect.to(
-          0,
+          0.4,
           EffectController(
             duration: 0.4,
             onMax: () {

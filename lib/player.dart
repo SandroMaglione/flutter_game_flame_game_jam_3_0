@@ -67,13 +67,13 @@ class Player extends SpriteComponent
 
       final effect = SequenceEffect([
         ScaleEffect.to(
-          Vector2.all(0.3),
+          Vector2.all(0.4),
           EffectController(
             duration: 0.2,
           ),
         ),
         OpacityEffect.to(
-          0,
+          0.4,
           EffectController(
             duration: 0.1,
             onMax: () {

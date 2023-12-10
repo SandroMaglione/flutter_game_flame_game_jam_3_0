@@ -9,7 +9,7 @@ import 'package:flutter_game_flame_game_jam_3_0/main.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
-final Player _player = Player(50.0);
+final Player _player = Player(60.0);
 const double wallSize = 30;
 const double origin = 500;
 final Vector2 wallOrigin = Vector2(-origin, -origin);

@@ -106,9 +106,10 @@ class GameView extends StatelessWidget {
                             totalSteps: state.totalNpc > 0 ? state.totalNpc : 1,
                             padding: 0,
                             currentStep: state.flames,
-                            selectedColor: Colors.orangeAccent,
-                            unselectedColor: Colors.blueAccent,
-                            size: 30,
+                            selectedColor: const Color.fromRGBO(219, 34, 42, 1),
+                            unselectedColor:
+                                const Color.fromRGBO(32, 42, 68, 1),
+                            size: 20,
                             roundedEdges: const Radius.circular(20),
                           ),
                           const SizedBox(height: 6),
@@ -144,7 +145,7 @@ class MyGame extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
-    debugMode = true;
+    // debugMode = true;
 
     await images.loadAll([Assets.flamePng, Assets.icePng]);
     await add(
