@@ -25,17 +25,19 @@ class GameStateCubit extends Cubit<GameState> {
       gameState.putIfAbsent(i, () => playerStatus);
     }
 
-    emit(GameState(gameState));
+    emit(GameState(gameState, 0));
     return npcs;
   }
 
-  void changeStatus(Npc npc) {
+  void changeStatus(Npc npc, bool fromPlayer) {
     if (state.isEnded == null) {
-      final newState = <int, PlayerStatus>{...state.npcMap};
-      newState.update(npc.id, (value) => npc.playerStatus);
-      emit(GameState(newState));
+      emit(state.updateNpc(npc, fromPlayer));
     }
   }
 
-  void restart() {}
+  void changeStatusPlayer() {
+    if (state.isEnded == null) {
+      emit(state.losePoints());
+    }
+  }
 }

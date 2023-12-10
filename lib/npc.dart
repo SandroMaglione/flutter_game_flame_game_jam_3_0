@@ -44,7 +44,7 @@ class Npc extends SpriteComponent
     }
   }
 
-  void changeStatus(PlayerStatus to) {
+  void changeStatus(PlayerStatus to, bool fromPlayer) {
     if (!isChanging && playerStatus != to) {
       isChanging = true;
 
@@ -81,7 +81,7 @@ class Npc extends SpriteComponent
         ),
       ], onComplete: () {
         isChanging = false;
-        bloc.changeStatus(this);
+        bloc.changeStatus(this, fromPlayer);
       });
 
       add(effect);
@@ -91,7 +91,6 @@ class Npc extends SpriteComponent
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
 
     if (bloc.state.isEnded == null) {
@@ -101,9 +100,9 @@ class Npc extends SpriteComponent
           !other.isChanging &&
           other.playerStatus != playerStatus) {
         if (stength > other.stength) {
-          other.changeStatus(playerStatus);
+          other.changeStatus(playerStatus, false);
         } else {
-          changeStatus(other.playerStatus);
+          changeStatus(other.playerStatus, false);
         }
       }
     }

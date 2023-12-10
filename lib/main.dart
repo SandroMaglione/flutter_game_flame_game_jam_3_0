@@ -46,9 +46,7 @@ class GameView extends StatelessWidget {
       children: [
         Positioned.fill(
           child: GameWidget(
-            game: MyGame(
-              context.read<GameStateCubit>(),
-            ),
+            game: MyGame(context.read<GameStateCubit>()),
           ),
         ),
         Positioned(
@@ -71,28 +69,25 @@ class GameView extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 30),
-                          ElevatedButton(
-                            onPressed: () {
-                              context.read<GameStateCubit>().restart();
-                            },
-                            style: const ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.black),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 10,
+                          Column(
+                            children: [
+                              Text(
+                                ended.toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                               ),
-                              child: Text(
-                                "Click to restart",
-                                style: TextStyle(
+                              Text(
+                                "${state.points}",
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 36,
                                   color: Colors.white,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                           const SizedBox(width: 30),
                           Transform.scale(
@@ -104,14 +99,27 @@ class GameView extends StatelessWidget {
                           ),
                         ],
                       )
-                    : StepProgressIndicator(
-                        totalSteps: state.totalNpc > 0 ? state.totalNpc : 1,
-                        padding: 0,
-                        currentStep: state.flames,
-                        selectedColor: Colors.orangeAccent,
-                        unselectedColor: Colors.blueAccent,
-                        size: 30,
-                        roundedEdges: const Radius.circular(20),
+                    : Column(
+                        children: [
+                          StepProgressIndicator(
+                            totalSteps: state.totalNpc > 0 ? state.totalNpc : 1,
+                            padding: 0,
+                            currentStep: state.flames,
+                            selectedColor: Colors.orangeAccent,
+                            unselectedColor: Colors.blueAccent,
+                            size: 30,
+                            roundedEdges: const Radius.circular(20),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            "${state.points}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       );
               },
             ),

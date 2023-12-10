@@ -2,12 +2,19 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/npc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
-class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
+class Player extends SpriteComponent
+    with
+        HasGameRef,
+        CollisionCallbacks,
+        FlameBlocReader<GameStateCubit, GameState> {
   PlayerStatus playerStatus = const Flame();
   Vector2 _direction = Vector2.zero();
   double speed = 400.0;
@@ -48,19 +55,18 @@ class Player extends SpriteComponent with HasGameRef, CollisionCallbacks {
     };
 
     sprite = Sprite(game.images.fromCache(playerStatus.asset));
+    bloc.changeStatusPlayer();
   }
 
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollisionStart
     super.onCollisionStart(intersectionPoints, other);
 
     if (other is Wall) {
       _direction.invert();
     } else if (other is Npc) {
-      // _direction.invert();
-      other.changeStatus(playerStatus);
+      other.changeStatus(playerStatus, true);
     }
   }
 }

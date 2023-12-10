@@ -15,6 +15,9 @@ final class Flame extends PlayerStatus {
 
   @override
   String get asset => Assets.flamePng;
+
+  @override
+  String toString() => "TOO HOT";
 }
 
 final class Ice extends PlayerStatus {
@@ -22,4 +25,7 @@ final class Ice extends PlayerStatus {
 
   @override
   String get asset => Assets.icePng;
+
+  @override
+  String toString() => "TOO COLD";
 }
