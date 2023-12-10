@@ -3,22 +3,27 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/assets.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player_status.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
 class Npc extends SpriteComponent
-    with HasGameRef, CollisionCallbacks, RiverpodComponentMixin {
-  PlayerStatus playerStatus = const Flame();
+    with
+        HasGameRef,
+        CollisionCallbacks,
+        FlameBlocReader<GameStateCubit, GameState> {
   Vector2 _direction = Vector2(0, 1);
   double speed = 200.0;
   double stength;
 
   bool isChanging = false;
-  int id = -1;
+  PlayerStatus playerStatus;
+  final int id;
 
-  Npc(Vector2 direction) : stength = Random().nextDouble() {
+  Npc(Vector2 direction, {required this.id, required this.playerStatus})
+      : stength = Random().nextDouble() {
     _direction = direction;
   }
 
@@ -79,11 +84,6 @@ class Npc extends SpriteComponent
 
       add(effect);
     }
-  }
-
-  void assignId(int id, PlayerStatus playerStatus) {
-    this.id = id;
-    this.playerStatus = playerStatus;
   }
 
   @override

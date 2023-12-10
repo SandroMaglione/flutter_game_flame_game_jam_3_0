@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
-import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_game_flame_game_jam_3_0/direction.dart';
-import 'package:flutter_game_flame_game_jam_3_0/game_state.dart';
+import 'package:flutter_game_flame_game_jam_3_0/game_state_cubit.dart';
 import 'package:flutter_game_flame_game_jam_3_0/main.dart';
-import 'package:flutter_game_flame_game_jam_3_0/npc.dart';
 import 'package:flutter_game_flame_game_jam_3_0/player.dart';
 import 'package:flutter_game_flame_game_jam_3_0/wall.dart';
 
@@ -16,27 +13,17 @@ const double origin = 500;
 final Vector2 wallOrigin = Vector2(-origin, -origin);
 const double wallLength = origin * 2;
 
-final _npcs = List.generate(
-  10,
-  (i) => Npc(
-    (Vector2.random().normalized() * (Random().nextBool() ? 1 : -1)),
-  ),
-);
-
 class MyWorld extends World
     with
         HasGameRef<MyGame>,
         KeyboardHandler,
         HasCollisionDetection,
-        RiverpodComponentMixin {
+        FlameBlocReader<GameStateCubit, GameState> {
   MyWorld({super.children});
 
   @override
-  void onMount() {
-    addToGameWidgetBuild(() {
-      ref.read(gameStateProvider.notifier).init(_npcs);
-    });
-    super.onMount();
+  Future<void> onLoad() async {
+    super.onLoad();
 
     add(Wall(
       position: wallOrigin,
@@ -55,7 +42,8 @@ class MyWorld extends World
       size: Vector2(wallSize, wallLength + wallSize),
     ));
 
-    addAll(_npcs);
+    final npcs = bloc.init(10);
+    addAll(npcs);
 
     add(_player);
     gameRef.cameraComponent.follow(_player);
