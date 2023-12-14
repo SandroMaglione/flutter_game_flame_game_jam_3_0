@@ -10,7 +10,7 @@
 
 ***
 
-This project is part of my weekly newsletter at [**sandromaglione.com**](https://www.sandromaglione.com/newsletter?ref=Github&utm_medium=newsletter_project&utm_term=ocaml).
+This project is part of my weekly newsletter at [**sandromaglione.com**](https://www.sandromaglione.com/newsletter?ref=Github&utm_medium=newsletter_project&utm_term=flutter&utm_term=games).
 
 
 <a href="https://www.sandromaglione.com/newsletter?ref=Github&utm_medium=newsletter_project&utm_term=flutter&utm_term=games">
@@ -18,9 +18,13 @@ This project is part of my weekly newsletter at [**sandromaglione.com**](https:/
 </a>
 
 ## Project structure
-You can plain the game on itch.io:
+You can play the game on itch.io:
 
-[**Play here the full game 🔥❄️❄️**](https://sandromaglione.itch.io/flame-and-ice)
+[**Play here the full game 🔥❄️**](https://sandromaglione.itch.io/flame-and-ice)
 
 **Read all the details in the full article** 👇🔜
 
+
+<a href="https://www.sandromaglione.com/articles/making-games-with-flutter-getting-started-using-flame?ref=Github&utm_medium=newsletter_project&utm_term=flutter&utm_term=games">
+    <img alt="Read the full article on my website" src="https://www.sandromaglione.com/api/image?title=Making%20Games%20with%20Flutter%20-%20Getting%20started%20using%20flame&publishedAt=2023-12-13" target="_blank" /> 
+</a>
