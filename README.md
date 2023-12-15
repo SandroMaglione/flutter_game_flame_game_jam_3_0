@@ -22,7 +22,7 @@ You can play the game on itch.io:
 
 [**Play here the full game 🔥❄️**](https://sandromaglione.itch.io/flame-and-ice)
 
-**Read all the details in the full article** 👇🔜
+**Read all the details in the full article** 👇
 
 
 <a href="https://www.sandromaglione.com/articles/making-games-with-flutter-getting-started-using-flame?ref=Github&utm_medium=newsletter_project&utm_term=flutter&utm_term=games">
